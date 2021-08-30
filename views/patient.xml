@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="patient_form" model="ir.ui.view">
+        <field name="name">hospital.patient.form</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reference_no" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name_id" widget="res_partner_many2one"
+                                   context="{'res_partner_search_mode': 'customer', 'show_address': 1 }"
+                                     options="{&quot;always_reload&quot;: True}"/>
+                            <!--<field name="address"/>-->
+                            <field name="mobile"/>
+                            <field name="phone"/>
+                        </group>
+                        <group>
+                            <field name="bdate"/>
+                            <field name="age"/>
+                            <field name="gender"/>
+                            <field name="bloodgrp"/>
+                        </group>
+                    </group>
+                    <field name="note"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="Patients_action" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new quotation, the first step of a new sale!
+            </p>
+        </field>
+    </record>
+    <menuitem id="hospital_root"
+              name="Hospital"
+              sequence="10"/>
+    <menuitem id="hospital_patient_root"
+              name="Patient Details"
+              parent="hospital_root"
+              sequence="10"/>
+    <menuitem id="hospital_patient"
+              name="Patient Card"
+              parent="hospital_patient_root"
+              action="Patients_action"
+              sequence="10"/>
+</odoo>

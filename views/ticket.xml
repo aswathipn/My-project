@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="history_tree" model="ir.ui.view">
+        <field name="name">hospital.history.tree</field>
+        <field name="model">hospital.history</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ticket_no" readonly="1"/>
+                <field name="date"/>
+                <field name="doctor_id"/>
+                <field name="department"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ticket_form" model="ir.ui.view">
+        <field name="name">hospital.ticket.form</field>
+        <field name="model">hospital.ticket</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button id="button_confirm" name="action_confirm"
+                            string="Confirm" class="btn-primary" type="object"/>
+                    <button id="button-cancel" name="action_cancel"
+                            type="object" string="Cancel"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,op"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ticket_no" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_card" widget="Many2one"/>
+                            <field name="name_id" widget="res_partner_many2one"
+                                   context="{'res_partner_search_mode': 'customer', 'show_address': 1 }"
+                                   options="{&quot;always_reload&quot;: True}"/>
+                            <field name="mobile"/>
+                            <field name="phone"/>
+                        </group>
+                        <group>
+                            <field name="age"/>
+                            <field name="gender"/>
+                            <field name="bloodgrp"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="doctor_id"/>
+                            <field name="currency_id"/>
+                            <field name="fee"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="Ticket_action" model="ir.actions.act_window">
+        <field name="name">OP Ticket</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.ticket</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new quotation, the first step of a new sale!
+            </p>
+        </field>
+    </record>
+    <record id="History_action" model="ir.actions.act_window">
+        <field name="name">OP History</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.history</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new quotation, the first step of a new sale!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="hospital_root"
+              name="Hospital"
+              sequence="10"/>
+    <menuitem id="hospital_ticket_root"
+              name="OP Ticket"
+              parent="hospital_root"
+              sequence="10"/>
+    <menuitem id="hospital_ticket"
+              name=" Card"
+              parent="hospital_ticket_root"
+              action="Ticket_action"
+              sequence="10"/>
+    <menuitem id="hospital_history"
+              name=" History"
+              parent="hospital_ticket_root"
+              action="History_action"
+              sequence="10"/>
+
+</odoo>
